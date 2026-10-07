@@ -1,5 +1,5 @@
 import { Schema, model, Types } from 'mongoose';
-export const reviewSchema = new Schema(
+const reviewSchema = new Schema(
   {
     userId: { type: Types.ObjectId, ref: 'User', required: true, index: true },
     productID: {
