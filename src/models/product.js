@@ -17,4 +17,4 @@ const productShema = new Schema(
 );
 
 productShema.index({ brand: 1, price: 1 });
-export default mongoose.model('Product', productShema);
+export const Product = model('Product', productShema);
