@@ -21,8 +21,8 @@ app.use(helmet());
 app.use(logger);
 
 app.use('/api/user', authRouter);
-app.use('/api/user', reviewRouter);
-app.use('/api/user', storesRouter);
+app.use('/api', reviewRouter);
+app.use('/api', storesRouter);
 
 app.use(notFoundHandler);
 app.use(errors());
