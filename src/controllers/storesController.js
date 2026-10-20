@@ -19,3 +19,25 @@ export const getStoresList = async (req, res) => {
     totalPages: Math.ceil(totalItems / limit),
   });
 };
+
+export const getNearestStores = async (req, res) => {
+  const { lng, lat, max = 5000, limit = 10 } = req.query;
+
+  const stores = await Store.find({
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [Number(lng), Number(lat)],
+        },
+        $maxDistance: Number(max),
+      },
+    },
+  }).limit(Number(limit));
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found nearest stores!',
+    data: stores,
+  });
+};
