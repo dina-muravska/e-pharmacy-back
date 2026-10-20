@@ -10,6 +10,18 @@ import {
 } from '../controllers/storesController.js';
 const router = Router();
 
-router.get('/stores', celebrate(listStoresSchema), getStoresList);
-router.get('/stores/nearest', celebrate(nearestStoresSchema), getNearestStores);
+router.get(
+  '/stores',
+  celebrate({
+    query: listStoresSchema.extract('query'), // витягуємо саме query частину
+  }),
+  getStoresList,
+);
+router.get(
+  '/stores/nearest',
+  celebrate({
+    query: nearestStoresSchema.extract('query'), // витягуємо саме query частину
+  }),
+  getNearestStores,
+);
 export default router;
