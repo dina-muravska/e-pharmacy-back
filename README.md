@@ -2,6 +2,12 @@
 
 An Express and MongoDB backend for an online pharmacy. The current API provides account registration and cookie-based sessions, product and store browsing, customer review listing, and basic cart and mock-checkout operations.
 
+## Live API Documentation
+
+Explore the deployed API in [Swagger UI](https://e-pharmacy-back-wx2u.onrender.com/api-docs/).
+
+Production backend base URL: **[https://e-pharmacy-back-wx2u.onrender.com](https://e-pharmacy-back-wx2u.onrender.com)**
+
 ## Features
 
 - User registration, login, logout, session refresh, and authenticated profile lookup.
@@ -48,7 +54,8 @@ The codebase also defines Mongoose models for orders, but currently has no order
 
    - `MONGO_URL` is required. It is passed directly to `mongoose.connect()`. Use a local MongoDB URI or your own MongoDB connection URI, replacing the placeholder without sharing or committing credentials.
    - `PORT` is optional and defaults to `3000`. When set, it must be a numeric port with no trailing punctuation.
-   - `NODE_ENV` is optional. When set to `production`, unexpected server errors return a generic message; otherwise, the error handler may return the underlying message.
+   - `NODE_ENV` is optional. Set it to `production` in production deployments; unexpected server errors then return a generic message, and Swagger uses the production API base URL.
+   - `OPENAPI_SERVER_URL` is optional. Set it only when Swagger should use a custom API base URL; it must be the API origin/base URL without `/api-docs`.
 
 3. Ensure MongoDB is running and reachable using `MONGO_URL`. The server connects to MongoDB before it starts listening for HTTP requests; it exits if the connection attempt fails.
 
@@ -68,7 +75,7 @@ node src/server.js
 
 ## API documentation
 
-Swagger UI: **[http://localhost:3000/api-docs](http://localhost:3000/api-docs)** with the default port. When `PORT` is set, use `http://localhost:<PORT>/api-docs`. The OpenAPI server URL is generated from `PORT` (default `3000`).
+Open local Swagger UI after starting the backend at **[http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)**. If you set `PORT`, replace `3000` with that port. Locally, the OpenAPI server URL uses `http://localhost:<PORT>` (default `http://localhost:3000`). In production (`NODE_ENV=production`, or on Render), it uses `https://e-pharmacy-back-wx2u.onrender.com`. `OPENAPI_SERVER_URL`, if set, overrides either default. The OpenAPI server URL is the backend base URL and does not include `/api-docs`.
 
 The UI is suitable for exploring the endpoint definitions and trying public endpoints. The service sets session cookies with `HttpOnly`, `Secure`, and `SameSite=None`; browsers will not store or send these cookies over plain HTTP. To test authenticated browser requests, use an HTTPS development setup. No bearer-token authentication is implemented.
 

@@ -9,6 +9,13 @@ const localPort =
   Number.isInteger(configuredPort) && configuredPort > 0 && configuredPort <= 65535
     ? configuredPort
     : 3000;
+const isProduction =
+  process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
+const serverUrl =
+  process.env.OPENAPI_SERVER_URL ||
+  (isProduction
+    ? 'https://e-pharmacy-back-wx2u.onrender.com'
+    : `http://localhost:${localPort}`);
 
 export const swaggerSpec = swaggerJsdoc({
   definition: {
@@ -21,8 +28,12 @@ export const swaggerSpec = swaggerJsdoc({
     },
     servers: [
       {
-        url: `http://localhost:${localPort}`,
-        description: 'Local development',
+        url: serverUrl,
+        description: isProduction
+          ? 'Production API'
+          : process.env.OPENAPI_SERVER_URL
+            ? 'Configured API server'
+            : 'Local development',
       },
     ],
     tags: [
