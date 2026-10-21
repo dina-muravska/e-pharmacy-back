@@ -11,6 +11,8 @@ import { errors } from 'celebrate';
 import authRouter from './routes/authRoutes.js';
 import reviewRouter from './routes/reviewRoutes.js';
 import storesRouter from './routes/storesRoutes.js';
+import productsRouter from './routes/productsRoutes.js';
+import cartRouter from './routes/cartRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -23,6 +25,8 @@ app.use(logger);
 app.use('/api/user', authRouter);
 app.use('/api', reviewRouter);
 app.use('/api', storesRouter);
+app.use('/api', productsRouter);
+app.use('/api', cartRouter);
 
 app.use(notFoundHandler);
 app.use(errors());

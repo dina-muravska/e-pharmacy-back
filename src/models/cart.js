@@ -3,7 +3,7 @@ import mongoose, { Schema, model } from 'mongoose';
 const itemSchema = new Schema(
   {
     priductID: {
-      types: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
       required: true,
     },
