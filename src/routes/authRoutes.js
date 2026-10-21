@@ -16,7 +16,7 @@ import { authenticate } from '../middleware/authenticate.js';
 const router = Router();
 router.post('/register', celebrate({ body: registerUserSchema }), registerUser);
 router.post('/login', celebrate({ body: loginUserSchema }), loginUser);
-router.get('/auth/logout', logoutUser);
+router.get('/auth/logout', authenticate, logoutUser);
 router.post('/auth/refresh', refreshUserSession);
 router.get('/user-info', authenticate, getUserInfo);
 export default router;
