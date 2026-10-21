@@ -5,6 +5,7 @@ export const getProductsList = async (req, res) => {
     q,
     brand,
     tags,
+    tag,
     rx,
     minPrice,
     maxPrice,
@@ -50,5 +51,20 @@ export const getProductsList = async (req, res) => {
     limit: Number(limit),
     totalItems,
     totalPages: Math.ceil(totalItems / limit),
+  });
+};
+
+export const getProductById = async (req, res) => {
+  const { id } = req.params;
+  const product = await Product.findById(id);
+
+  if (!product) {
+    return res.status(404).json({ status: 404, message: 'Product not found' });
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found product!',
+    data: product,
   });
 };
