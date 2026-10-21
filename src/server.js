@@ -1,8 +1,10 @@
 import express from 'express';
+import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { logger } from './middleware/logger.js';
 import 'dotenv/config';
+import { swaggerSpec } from './docs/swagger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { ErrorHandler } from './middleware/errorHandler.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -21,6 +23,12 @@ app.use(cors());
 app.use(cookieParser());
 app.use(helmet());
 app.use(logger);
+
+app.use('/api-docs', (req, res, next) => {
+  res.removeHeader('Content-Security-Policy');
+  next();
+});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/user', authRouter);
 app.use('/api', reviewRouter);
